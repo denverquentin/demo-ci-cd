@@ -11,8 +11,8 @@ export default class Image extends LightningElement {
 		return (!this.url || this.url == null) ? false : true;
 	}
 
-	badCodeHere() {
-		this.alt = 'hello';
-	}
+//	badCodeHere() {
+//		this.alt = 'hello';
+//	}
 
 }
