@@ -35,27 +35,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-
-      - name: Cache node modules
-        uses: actions/cache@v3
-        id: npm_cache_id
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-cache-
-            ${{ runner.os }}-
-
-      - name: Install Dependencies
-        if: steps.npm_cache_id.outputs.cache-hit != 'true'
-        run: |
-          npm ci
-          npm list --dev
-
       # install sfdx & source scanner plugin
       - name: Install SFDX (Salesforce CLI)
         id: install-sfdx
@@ -76,6 +55,8 @@ jobs:
       - name: Lint LWC
         id: lint-lwc
         run: |
+          npm install
+          npm list --dev
           npm run lint
 
       # apex source scanner
