@@ -128,12 +128,12 @@ jobs:
             exit 1
           fi
 
+      # uncomment and update the lines below if you need to assign a permission set
+      # before you run unit tests
       # assign the permission set
-      - name: Assign Permission Set to Scratch Org User
-        id: assign-permission-set
-        #run: sfdx force:user:permset:assign -n PermSet -u validate
-        # uncomment and update the line above if you need to assign a permission set
-        # before you run unit tests
+      #- name: Assign Permission Set to Scratch Org User
+      #  id: assign-permission-set
+      #  run: sfdx force:user:permset:assign -n PermSet -u validate
 
       # run all tests in the scratch org
       - name: Run All Tests in Scratch Org
