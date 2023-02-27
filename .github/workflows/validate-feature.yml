@@ -55,7 +55,7 @@ jobs:
       - name: Lint LWC
         id: lint-lwc
         run: |
-          npm install
+          npm ci
           npm list --dev
           npm run lint
 
@@ -167,18 +167,6 @@ jobs:
         run: |
           sfdx force:apex:execute -f scripts/check-test-coverage.apex -u validate --json > testcoverage.json
           echo "testcoverage.json = $(jq . testcoverage.json)"
-
-      # https://github.com/marketplace/actions/execute-javascript-inline
-      # To use latest action, specify "release-master" instead of "v0.0.2"
-#      - name: Determine Error
-#        id: error
-#        if: failure()
-#        uses: satackey/action-js-inline@v0.0.2
-#        with:
-#          script: |
-#            const core = require('@actions/core');
-#            console.log(`error: ${{ steps.authenticate-devhub.outputs.error }}`);
-#            core.setOutput('message', `${{ steps.authenticate-devhub.outputs.error }}`);
 
       # delete the scratch org
       - name: Delete the Scratch Org

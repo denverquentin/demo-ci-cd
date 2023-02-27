@@ -36,6 +36,9 @@ These are the included Actions and their intended use:
 1. Move the github-actions.zip into the root of your Salesforce project.
 2. Unzip the file - if using the Windows Extract All tool, be sure to remove the "github-actions" directory at the end of the extract path. This will unzip the metadata files into the force-app directory in the correct location.
 3. Verify that your existing package.json file contains a `lint` script and that the devDependencies contains the dependencies listed in the included package-example-for-lint.json file.
+4. After you update the package.json, run this command to generate a package-lock.json which will be used in GitHub: `npm i --package-lock-only`
+5. Also run this command so you can run ESLint locally: `npm ci`
+6. Verify that ESLint is setup by running this command on your computer: `npm run lint`
 
 If you do not use the standard force-app directory name, you will need to manually copy the metadata from the unzipped force-app into your custom named package directory.
 
@@ -46,6 +49,7 @@ The zip directory contains:
 - ruleset.xml in the pmd directory that is used by the sfdx-scanner. This file can be modified to scan for only the rules you want.
 - check-test-coverage.apex file in the scripts directory that verifies all Apex classes have at least 85% code coverage. The coverage threshold can be edited to whatever percent you want.
 - package-example-for-lint.json file that is for reference only. 
+- force-app/main/default/lwc/.eslintrc.json which tells ESLint which rules to run or ignore.
 
 
 ## Configuration for JWT Bearer Flow Authorization
@@ -64,5 +68,9 @@ Once you complete the first 3 steps are complete, you'll need to create the foll
    Secret = the Consumer Key value from step 2 - create a connected app goes here
 5. Click the Add Secret button to save.
 
+
 ## GitHub Action Configuration
+You may want to make the following edits to any of the yml files:
+- change the branch names that trigger the action
+- change permission set names
 

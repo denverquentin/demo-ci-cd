@@ -1,0 +1,34 @@
+{
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+        "requireConfigFile": false,
+        "babelOptions": {
+            "parserOpts": {
+                "plugins": ["classProperties", ["decorators", { "decoratorsBeforeExport": false }]]
+            }
+        }
+    },
+    "plugins": [
+        "@lwc/eslint-plugin-lwc",
+        "@locker/eslint-plugin-locker"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "@salesforce/eslint-config-lwc/recommended",
+        "@locker/eslint-config-locker/recommended"
+    ],
+    "rules": {
+        "@lwc/lwc/no-async-operation": "off",
+        "@locker/locker/distorted-window-set-timeout": "off",
+        "@lwc/lwc/consistent-component-name": "error",
+        "@lwc/lwc/no-api-reassignments": "error",
+        "@lwc/lwc/no-attributes-during-construction": "error",
+        "@lwc/lwc/no-deprecated": "error",
+        "@lwc/lwc/no-document-query": "error",
+        "@lwc/lwc/no-leading-uppercase-api-name": "error",
+        "@lwc/lwc/valid-api": "error",
+        "@lwc/lwc/valid-track": "error",
+        "@lwc/lwc/valid-wire": "error",
+        "@locker/locker/distorted-document-cookie": "error"
+    }
+}
