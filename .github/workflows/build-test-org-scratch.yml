@@ -3,17 +3,25 @@
 # - lint all javascript in all components
 # - build a scratch org and deploy all metadata to it
 # - run all unit tests
-# - verify test coverage is sufficient
 # - delete the scratch org when done
 
-name: Validate Feature
+# YOU SHOULD RUN EITHER: build-test-org-scratch.yml OR build-test-org-sandbox.yml
+# based on your org setup - you do not need to run both
+name: Build Sandbox Test Org
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push event but only for a branch that starts with /feature
+  # Triggers the workflow on push or pull request events but for a branch named
+  # dev, develop or development
   # you can change this to validate any branch based on your naming conventions
   push:
-    branches: [ feature/** ]
+    branches: [ dev, develop, development ]
+    paths:
+#      - 'force-app/**'
+# could use the paths above to only run the cicd process if code changes
+  pull_request:
+    types: [opened, synchronized, reopened]
+    branches: [ dev, develop, development ]
     paths:
 #      - 'force-app/**'
 # could use the paths above to only run the cicd process if code changes
@@ -52,6 +60,7 @@ jobs:
           sfdx plugins
 
       # lint javascript for lwc's
+      # TODO: this is deprecated - use the sfdx scanner:run intead - it has a lint feature
       - name: Lint LWC
         id: lint-lwc
         run: |
@@ -82,7 +91,7 @@ jobs:
       - name: Authenticate to Salesforce Dev Hub
         id: authenticate-devhub
         run: |
-          sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_ORG_CLIENTID }} --username ${{ secrets.HUB_ORG_USER }} --jwtkeyfile server.key --setalias hub --setdefaultdevhubusername --json > auth.json || true
+          sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_ORG_CLIENTID }} --username ${{ secrets.HUB_ORG_USER }} --jwtkeyfile sf.key --setalias hub --setdefaultdevhubusername --json > auth.json || true
           echo "auth.json = $(jq . auth.json)"
           status=$(jq -r '.status' auth.json)
           if [ $status -ne 0 ]; then
@@ -128,12 +137,10 @@ jobs:
             exit 1
           fi
 
-      # uncomment and update the lines below if you need to assign a permission set
-      # before you run unit tests
       # assign the permission set
-      #- name: Assign Permission Set to Scratch Org User
-      #  id: assign-permission-set
-      #  run: sfdx force:user:permset:assign -n PermSet -u validate
+      - name: Assign Permission Set to Scratch Org User
+        id: assign-permission-set
+        run: sfdx force:user:permset:assign -n PermSet -u validate
 
       # run all tests in the scratch org
       - name: Run All Tests in Scratch Org
@@ -167,6 +174,18 @@ jobs:
         run: |
           sfdx force:apex:execute -f scripts/check-test-coverage.apex -u validate --json > testcoverage.json
           echo "testcoverage.json = $(jq . testcoverage.json)"
+
+      # https://github.com/marketplace/actions/execute-javascript-inline
+      # To use latest action, specify "release-master" instead of "v0.0.2"
+#      - name: Determine Error
+#        id: error
+#        if: failure()
+#        uses: satackey/action-js-inline@v0.0.2
+#        with:
+#          script: |
+#            const core = require('@actions/core');
+#            console.log(`error: ${{ steps.authenticate-devhub.outputs.error }}`);
+#            core.setOutput('message', `${{ steps.authenticate-devhub.outputs.error }}`);
 
       # delete the scratch org
       - name: Delete the Scratch Org
