@@ -31,6 +31,26 @@ jobs:
     # helpful docs: https://developer.salesforce.com/blogs/2020/01/using-salesforce-dx-with-github-actions
     # https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli.htm#sfdx_setup_install_cli_npm
     steps:
+      # checkout the code in the pull request or commit
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        id: npm_cache_id
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-cache-
+            ${{ runner.os }}-
+
+      - name: Install Dependencies
+        if: steps.npm_cache_id.outputs.cache-hit != 'true'
+        run: |
+          npm ci
+          npm list --dev
+
       # install sfdx & source scanner plugin
       - name: Install SFDX (Salesforce CLI)
         id: install-sfdx
@@ -47,16 +67,10 @@ jobs:
           sfdx force
           sfdx plugins
 
-      # checkout the code in the pull request or commit
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
       # lint javascript for lwc's
       - name: Lint LWC
         id: lint-lwc
         run: |
-          npm ci
-          npm list --dev
           npm run lint
 
       # apex source scanner
