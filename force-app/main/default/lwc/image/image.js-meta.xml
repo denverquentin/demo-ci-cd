@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Image</masterLabel>
+    <description>Component to add an image to another LWC or Lightning App, Flow, Home, Tab etc.</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightningCommunity__Page</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage,lightning__RecordPage,lightningCommunity__Default">
+            <property label="Url" name="url" type="String" required="true" description="Required Absolute Url for the image."/>
+            <property label="Width" name="width" type="Integer" description="Optional Width attribute for the image."/>
+            <property label="Height" name="height" type="Integer" description="Optional Height attribute for the image."/>
+            <property label="Alt" name="alt" type="String" description="Optional Alt text to display for the image."/>
+            <property label="Class" name="imgClass" type="String" description="Optional Class name to apply to the image tag."/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
