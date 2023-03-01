@@ -107,7 +107,7 @@ public inherited sharing class Access {
 
 	// the methods below may also be useful for simple permission checks but the above method handles both object and field permissions in one call
 	public static Boolean isAccessible(Schema.SObjectType obj) {
-		return obj.getDescribe().isAccessible();
+		return obj.getDescribe(SObjectDescribeOptions.DEFAULT).isAccessible();
 	}
 
 	public static void checkIsAccessible(Schema.SObjectType obj) {
@@ -124,7 +124,7 @@ public inherited sharing class Access {
 
 
 	public static Boolean isCreateable(Schema.SObjectType obj) {
-		return obj.getDescribe().isCreateable();
+		return obj.getDescribe(SObjectDescribeOptions.DEFAULT).isCreateable();
 	}
 
 	public static void checkIsCreateable(Schema.SObjectType obj) {
@@ -141,7 +141,7 @@ public inherited sharing class Access {
 
 
 	public static Boolean isUpdateable(Schema.SObjectType obj) {
-		return obj.getDescribe().isUpdateable();
+		return obj.getDescribe(SObjectDescribeOptions.DEFAULT).isUpdateable();
 	}
 
 	public static void checkIsUpdateable(Schema.SObjectType obj) {
@@ -158,7 +158,7 @@ public inherited sharing class Access {
 
 
 	public static Boolean isDeleteable(Schema.SObjectType obj) {
-		return obj.getDescribe().isDeletable();
+		return obj.getDescribe(SObjectDescribeOptions.DEFAULT).isDeletable();
 	}
 
 	public static void checkIsDeleteable(Schema.SObjectType obj) {

@@ -251,7 +251,7 @@ private class AccessTest {
 	@IsTest
 	static void testSObjectAccessible() {
 		System.runAs(getActiveUserWithStandardProfile()) {
-			System.assertEquals(Account.SObjectType.getDescribe().isAccessible(), Access.isAccessible(Account.SObjectType));
+			System.assertEquals(Account.SObjectType.getDescribe(SObjectDescribeOptions.DEFAULT).isAccessible(), Access.isAccessible(Account.SObjectType));
 
 			try {
 				Access.checkIsAccessible(Account.SObjectType);
@@ -261,7 +261,7 @@ private class AccessTest {
 
 			Schema.SObjectType inaccessibleSO;
 			for (Schema.SObjectType so : Schema.getGlobalDescribe().values()) {
-				if (!so.getDescribe().isAccessible()) {
+				if (!so.getDescribe(SObjectDescribeOptions.DEFAULT).isAccessible()) {
 					inaccessibleSO = so;
 					break;
 				}
@@ -286,7 +286,7 @@ private class AccessTest {
 	@IsTest
 	static void testSObjectCreateable() {
 		System.runAs(getActiveUserWithStandardProfile()) {
-			System.assertEquals(Account.SObjectType.getDescribe().isCreateable(), Access.isCreateable(Account.SObjectType));
+			System.assertEquals(Account.SObjectType.getDescribe(SObjectDescribeOptions.DEFAULT).isCreateable(), Access.isCreateable(Account.SObjectType));
 
 			try {
 				Access.checkIsCreateable(Account.SObjectType);
@@ -306,7 +306,7 @@ private class AccessTest {
 	@IsTest
 	static void testSObjectUpdateable() {
 		System.runAs(getActiveUserWithStandardProfile()) {
-			System.assertEquals(Account.SObjectType.getDescribe().isUpdateable(), Access.isUpdateable(Account.SObjectType));
+			System.assertEquals(Account.SObjectType.getDescribe(SObjectDescribeOptions.DEFAULT).isUpdateable(), Access.isUpdateable(Account.SObjectType));
 
 			try {
 				Access.checkIsUpdateable(Account.SObjectType);
@@ -326,18 +326,18 @@ private class AccessTest {
 	@IsTest
 	static void testSObjectDeleteable() {
 		System.runAs(getActiveUserWithStandardProfile()) {
-			//System.assertEquals(Account.SObjectType.getDescribe().isDeletable(), Access.isDeleteable(Account.SObjectType));
+			System.assertEquals(Account.SObjectType.getDescribe(SObjectDescribeOptions.DEFAULT).isDeletable(), Access.isDeleteable(Account.SObjectType));
 
 			try {
 				Access.checkIsDeleteable(Account.SObjectType);
 			} catch (Exception e) {
-				//System.assert(e.getMessage().startsWith('You do not have permission to Delete'));
+				System.assert(e.getMessage().startsWith('You do not have permission to Delete'));
 			}
 
 			try {
 				Access.checkIsDeleteable(new List<Schema.SObjectType> {Account.SObjectType, Lead.SObjectType, Case.SObjectType, ApexClass.SObjectType});
 			} catch (Exception e) {
-				//System.assert(e.getMessage().startsWith('You do not have permission to Delete'));
+				System.assert(e.getMessage().startsWith('You do not have permission to Delete'));
 			}
 		}
 	}
