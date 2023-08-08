@@ -73,4 +73,3 @@ Once you complete the first 3 steps are complete, you'll need to create the foll
 You may want to make the following edits to any of the yml files:
 - change the branch names that trigger the action
 - change permission set names
-
