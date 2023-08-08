@@ -1,0 +1,79 @@
+{
+	"orgName" : "Demo",
+	"country" : "US",
+	"language": "en_US",
+	"edition" : "Developer",
+	"adminEmail" : "quentin.fish@ust.com",
+	"description" : "scratch org to demo CI/CD",
+	"hasSampleData": false,
+	"features" : [
+		"AuthorApex",
+		"Communities",
+		"DebugApex",
+		"EnableSetPasswordInApi",
+		"ForceComPlatform",
+		"Sites",
+		"API",
+		"RecordTypes"
+	],
+	"settings" : {
+		"securitySettings" : {
+			"networkAccess" : {
+				"ipRanges" : [
+					{
+						"start" : "184.166.159.217",
+						"end" : "184.166.159.217",
+						"description" : "Quentin"
+					}
+				]
+			},
+			"sessionSettings" : {
+				"sessionTimeout" : "TwelveHours",
+				"disableTimeoutWarning" : true,
+				"enableSMSIdentity" : false,
+				"identityConfirmationOnTwoFactorRegistrationEnabled" : false,
+				"lockerServiceNext": true
+			}
+		},
+		"apexSettings" : {
+			"enableAggregateCodeCoverageOnly" : false,
+			"enableDisableParallelApexTesting" : false
+		},
+		"chatterSettings" : {
+			"enableChatter" : true
+		},
+		"communitiesSettings": {
+			"enableNetworksEnabled": true
+		},
+		"enhancedNotesSettings" : {
+			"enableEnhancedNotes" : false
+		},
+		"experienceBundleSettings" : {
+			"enableExperienceBundleMetadata" : true
+		},
+		"lightningExperienceSettings" : {
+			"enableAuraCDNPref" : false,
+			"enableLexEndUsersNoSwitching" : false,
+			"enableS1DesktopEnabled" : true,
+			"enableTryLightningOptOut" : true,
+			"enableUsersAreLightningOnly" : false
+		},
+		"mobileSettings" : {
+			"enableS1OfflinePref" : false,
+			"enableS1EncryptedStoragePref2" : false
+		},
+		"nameSettings" : {
+			"enableMiddleName" : false,
+			"enableNameSuffix" : false
+		},
+		"socialProfileSettings" : {
+			"enableSocialProfiles" : false
+		},
+		"userManagementSettings" : {
+			"enableEnhancedPermsetMgmt" : true,
+			"enableEnhancedProfileMgmt" : true,
+			"enableNewProfileUI" : true,
+			"enableProfileFiltering" : true
+		}
+	}
+}
